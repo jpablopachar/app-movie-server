@@ -29,6 +29,6 @@ namespace app_movie_server.Models
         /// Fecha y hora en que la categoría fue creada. Este valor es obligatorio.
         /// </value>
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

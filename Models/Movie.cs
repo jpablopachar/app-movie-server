@@ -66,7 +66,7 @@ namespace app_movie_server.Models
         /// <summary>
         /// Fecha y hora de creación del registro de la película.
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Identificador de la categoría a la que pertenece la película.
