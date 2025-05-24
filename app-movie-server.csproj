@@ -2,18 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>app_movie_server</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="WeatherForecast.fs" />
-    <Compile Include="Controllers/WeatherForecastController.fs" />
-    <Compile Include="Program.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Dtos\" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
