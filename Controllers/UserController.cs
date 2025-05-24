@@ -9,6 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace app_movie_server.Controllers
 {
+    /// <summary>
+    /// Controlador para gestionar las operaciones relacionadas con los usuarios en el sistema.
+    /// </summary>
+    /// <remarks>
+    /// Este controlador permite realizar operaciones como registrar nuevos usuarios, iniciar sesión,
+    /// y gestionar la información de los usuarios existentes.
+    /// </remarks>
+    /// <param name="userRepository">Repositorio de usuarios para acceder a la base de datos.</param>
+    /// <param name="mapper">Instancia de AutoMapper para realizar conversiones entre entidades y DTOs.</param>
+    /// <returns>
+    /// Una instancia de <see cref="UserController"/> que permite gestionar las operaciones relacionadas con los usuarios.
+    /// </returns>
     [Route("api/v{version:apiVersion}/user")]
     [ApiController]
     [ApiVersionNeutral]
