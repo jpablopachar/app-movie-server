@@ -94,6 +94,9 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
 
     services.AddSwaggerGen(options =>
     {
+        // Configuración para resolver conflictos de nombres de esquema
+        options.CustomSchemaIds(type => type.FullName);
+
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Description =
@@ -106,22 +109,22 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
         });
 
         options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
         {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    },
-                    Scheme = "oauth2",
-                    Name = "Bearer",
-                    In = ParameterLocation.Header
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 },
-                new List<string>()
-            }
-        });
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
 
         options.SwaggerDoc("v1", new OpenApiInfo
         {
@@ -139,8 +142,7 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
                 Name = "Licencia Personal",
                 Url = new Uri("https://render2web.com/promociones")
             }
-        }
-        );
+        });
 
         options.SwaggerDoc("v2", new OpenApiInfo
         {
@@ -164,22 +166,9 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
 
 static void ConfigurePipeline(WebApplication app)
 {
-    // CORS
-    app.UseCors("CorsPolicy");
+    // Configuración de Swagger - DEBE IR PRIMERO
+    app.UseSwagger();
 
-    // Autenticación y Autorización
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    // Mapeo de controladores
-    app.MapControllers();
-
-    // Soporte para archivos estáticos como imágenes
-    app.UseStaticFiles();
-
-    app.UseHttpsRedirection();
-
-    // Configuración de Swagger por ambiente
     if (app.Environment.IsDevelopment())
     {
         app.UseSwaggerUI(options =>
@@ -197,4 +186,20 @@ static void ConfigurePipeline(WebApplication app)
             options.RoutePrefix = "";
         });
     }
+
+    // Redirección HTTPS
+    app.UseHttpsRedirection();
+
+    // Soporte para archivos estáticos
+    app.UseStaticFiles();
+
+    // CORS
+    app.UseCors("CorsPolicy");
+
+    // Autenticación y Autorización
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    // Mapeo de controladores
+    app.MapControllers();
 }
